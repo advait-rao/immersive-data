@@ -1,6 +1,6 @@
 "use client";
 
-import { SignInButton, SignOutButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
@@ -74,6 +74,13 @@ const capabilityCards = [
     title: "Built For Real Creator Workflows",
     body: "From quick live analysis to curated tours, the product supports both immediate and polished delivery.",
   },
+];
+
+const navLinks = [
+  { label: "Overview", href: "#overview" },
+  { label: "Modes", href: "#modes" },
+  { label: "Workflow", href: "#workflow" },
+  { label: "Capabilities", href: "#capabilities" },
 ];
 
 export function LandingScreen() {
@@ -332,42 +339,62 @@ export function LandingScreen() {
 
   return (
     <main className="page-shell landing-shell landing-vision">
-      <section className="vision-hero is-visible" data-reveal>
+      <header className="vision-nav is-visible" aria-label="Primary navigation">
+        <a href="#overview" className="vision-nav-brand">
+          <span className="vision-nav-mark" aria-hidden="true">
+            SS
+          </span>
+          <span className="vision-nav-brand-text">
+            <strong>StatStage</strong>
+            <em>Story Director</em>
+          </span>
+        </a>
+
+        <nav className="vision-nav-links" aria-label="Landing sections">
+          {navLinks.map((link) => (
+            <a key={link.href} href={link.href}>
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="vision-nav-auth" aria-label="Authentication actions">
+          {authEnabled ? (
+            <>
+              <SignedOut>
+                <SignInButton mode={authButtonMode} fallbackRedirectUrl="/">
+                  <button type="button" className="secondary-btn nav-auth-btn">
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton mode={authButtonMode} fallbackRedirectUrl="/">
+                  <button type="button" className="primary-btn nav-auth-btn">
+                    Get Started
+                  </button>
+                </SignUpButton>
+                {isClerkDevelopmentInstance ? <span className="auth-mode-label">Clerk test keys active</span> : null}
+              </SignedOut>
+
+              <SignedIn>
+                <a href="/studio" className="secondary-link vision-nav-studio-link">
+                  Open Studio
+                </a>
+                <div className="vision-user-dropdown" aria-label="Account menu">
+                  <UserButton afterSignOutUrl="/" showName />
+                  <span className="vision-user-chevron" aria-hidden="true">
+                    ▾
+                  </span>
+                </div>
+              </SignedIn>
+            </>
+          ) : (
+            <span className="auth-status-label">Auth Not Configured</span>
+          )}
+        </div>
+      </header>
+
+      <section id="overview" className="vision-hero is-visible" data-reveal>
         <div className="vision-hero-copy">
-          <div className="auth-actions" aria-label="Authentication actions">
-            {authEnabled ? (
-              <>
-                <SignedOut>
-                  <SignInButton mode={authButtonMode} fallbackRedirectUrl="/">
-                    <button type="button" className="secondary-btn auth-btn">
-                      Sign In
-                    </button>
-                  </SignInButton>
-                  <SignUpButton mode={authButtonMode} fallbackRedirectUrl="/">
-                    <button type="button" className="primary-btn auth-btn">
-                      Create Account
-                    </button>
-                  </SignUpButton>
-                  {isClerkDevelopmentInstance ? <span className="auth-mode-label">Clerk test keys active</span> : null}
-                </SignedOut>
-
-                <SignedIn>
-                  <div className="auth-signed-in">
-                    <span className="auth-status-label">Logged In</span>
-                    <SignOutButton redirectUrl="/">
-                      <button type="button" className="secondary-btn auth-btn auth-logout-btn">
-                        Log Out
-                      </button>
-                    </SignOutButton>
-                    <UserButton afterSignOutUrl="/" />
-                  </div>
-                </SignedIn>
-              </>
-            ) : (
-              <span className="auth-status-label">Auth Not Configured</span>
-            )}
-          </div>
-
           <p className="vision-kicker">StatStage</p>
           <h1 className="vision-title">
             Direct data stories with the clarity
@@ -452,7 +479,7 @@ export function LandingScreen() {
         </aside>
       </section>
 
-      <section className="vision-mode-grid" aria-label="Creation modes" data-reveal>
+      <section id="modes" className="vision-mode-grid" aria-label="Creation modes" data-reveal>
         {creationModes.map((mode) => (
           <article key={mode.key} className="vision-mode-card">
             <p className="vision-mode-label">{mode.label}</p>
@@ -476,7 +503,7 @@ export function LandingScreen() {
         ))}
       </section>
 
-      <section className="vision-flow" aria-label="Narrative workflow" data-reveal>
+      <section id="workflow" className="vision-flow" aria-label="Narrative workflow" data-reveal>
         <div className="vision-flow-header">
           <p className="eyebrow">Workflow</p>
           <h2>From raw CSV to guided story delivery.</h2>
@@ -492,7 +519,7 @@ export function LandingScreen() {
         </div>
       </section>
 
-      <section className="vision-capability-grid" aria-label="Value proposition" data-reveal>
+      <section id="capabilities" className="vision-capability-grid" aria-label="Value proposition" data-reveal>
         {capabilityCards.map((card) => (
           <article key={card.title} className="vision-capability-card">
             <h2>{card.title}</h2>

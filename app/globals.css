@@ -987,9 +987,145 @@ td {
   z-index: -1;
 }
 
-.landing-vision .auth-actions {
-  justify-content: flex-start;
-  margin-bottom: 1rem;
+.vision-nav {
+  position: sticky;
+  top: 0.8rem;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.8rem;
+  border: 1px solid rgba(123, 170, 219, 0.38);
+  border-radius: 16px;
+  background:
+    linear-gradient(152deg, rgba(8, 15, 28, 0.92), rgba(6, 12, 22, 0.9)),
+    radial-gradient(circle at 86% 0%, rgba(111, 203, 255, 0.16), transparent 48%);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(12px);
+  padding: 0.56rem 0.72rem;
+}
+
+.vision-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+}
+
+.vision-nav-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid rgba(142, 193, 241, 0.44);
+  background: linear-gradient(145deg, rgba(30, 78, 128, 0.74), rgba(15, 39, 67, 0.78));
+  color: #e9f8ff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.vision-nav-brand-text {
+  display: grid;
+}
+
+.vision-nav-brand-text strong {
+  font-size: 0.88rem;
+  letter-spacing: 0.03em;
+  color: #eef6ff;
+}
+
+.vision-nav-brand-text em {
+  font-style: normal;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: #8eb2de;
+}
+
+.vision-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.26rem;
+  justify-content: center;
+}
+
+.vision-nav-links a {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: #b5cae8;
+  text-decoration: none;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.36rem 0.62rem;
+  transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease;
+}
+
+.vision-nav-links a:hover {
+  border-color: rgba(138, 183, 228, 0.34);
+  background: rgba(15, 28, 48, 0.58);
+  color: #e5f2ff;
+}
+
+.vision-nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 0.46rem;
+  justify-content: flex-end;
+  min-width: max-content;
+}
+
+.nav-auth-btn {
+  min-height: 38px;
+  padding: 0.44rem 0.74rem;
+  font-size: 0.8rem;
+}
+
+.vision-nav-studio-link {
+  border-color: rgba(123, 170, 216, 0.38);
+  border-radius: 999px;
+  padding: 0.44rem 0.7rem;
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+}
+
+.vision-user-dropdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(122, 171, 219, 0.44);
+  border-radius: 999px;
+  background: rgba(7, 14, 27, 0.74);
+  padding: 0.18rem 0.36rem 0.18rem 0.52rem;
+  min-height: 38px;
+}
+
+.vision-user-chevron {
+  color: #95b7de;
+  font-size: 0.74rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.vision-user-dropdown .cl-userButtonTrigger {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.vision-user-dropdown .cl-userButtonBox {
+  color: #e9f4ff;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.vision-user-dropdown .cl-userButtonAvatarBox {
+  width: 30px;
+  height: 30px;
 }
 
 .landing-vision .primary-btn {
@@ -1453,6 +1589,22 @@ td {
 }
 
 @media (max-width: 980px) {
+  .vision-nav {
+    grid-template-columns: 1fr auto;
+    row-gap: 0.48rem;
+  }
+
+  .vision-nav-links {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 0.16rem;
+  }
+
+  .vision-nav-auth {
+    justify-content: flex-end;
+  }
+
   .vision-hero {
     grid-template-columns: 1fr;
   }
@@ -1471,6 +1623,50 @@ td {
 }
 
 @media (max-width: 640px) {
+  .vision-nav {
+    top: 0.45rem;
+    padding: 0.48rem 0.54rem;
+    border-radius: 13px;
+  }
+
+  .vision-nav-brand-text em {
+    display: none;
+  }
+
+  .vision-nav-links {
+    gap: 0.2rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .vision-nav-links a {
+    font-size: 0.68rem;
+    padding: 0.32rem 0.56rem;
+  }
+
+  .vision-nav-auth {
+    gap: 0.32rem;
+  }
+
+  .nav-auth-btn {
+    min-height: 34px;
+    padding: 0.4rem 0.56rem;
+    font-size: 0.74rem;
+  }
+
+  .vision-nav-studio-link {
+    padding: 0.36rem 0.52rem;
+    font-size: 0.69rem;
+  }
+
+  .vision-user-dropdown {
+    padding: 0.14rem 0.28rem 0.14rem 0.4rem;
+    min-height: 34px;
+  }
+
+  .vision-user-dropdown .cl-userButtonBox {
+    display: none;
+  }
+
   .vision-hero-copy,
   .vision-hero-panel {
     border-radius: 16px;
