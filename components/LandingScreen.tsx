@@ -1,5 +1,6 @@
 "use client";
 
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 import { inferColumns } from "@/lib/charting";
@@ -43,6 +44,7 @@ const flowSteps = [
 ];
 
 export function LandingScreen() {
+  const authEnabled = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -134,6 +136,34 @@ export function LandingScreen() {
     <main className="page-shell landing-shell">
       <section className="landing-hero is-visible" data-reveal>
         <div className="landing-copy">
+          <div className="auth-actions" aria-label="Authentication actions">
+            {authEnabled ? (
+              <>
+                <SignedOut>
+                  <SignInButton mode="modal" fallbackRedirectUrl="/">
+                    <button type="button" className="secondary-btn auth-btn">
+                      Sign In
+                    </button>
+                  </SignInButton>
+                  <SignUpButton mode="modal" fallbackRedirectUrl="/">
+                    <button type="button" className="primary-btn auth-btn">
+                      Sign Up
+                    </button>
+                  </SignUpButton>
+                </SignedOut>
+
+                <SignedIn>
+                  <div className="auth-signed-in">
+                    <span className="auth-status-label">Logged In</span>
+                    <UserButton afterSignOutUrl="/" />
+                  </div>
+                </SignedIn>
+              </>
+            ) : (
+              <span className="auth-status-label">Auth Not Configured</span>
+            )}
+          </div>
+
           <p className="brand-kicker">StatStage</p>
           <p className="brand-subline">Studio-Grade Sports Data Storytelling</p>
           <p className="brand-display">StatStage</p>

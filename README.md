@@ -1,6 +1,7 @@
 # StatStage MVP (Next.js + Convex-Ready)
 
 StatStage is a sports-data storytelling web app. This MVP includes:
+- Clerk auth (sign up, sign in, and visible logged-in state on landing page)
 - Landing page with two choices:
   - Upload your own CSV
   - Explore sample `6000 Run Club` data
@@ -12,6 +13,7 @@ StatStage is a sports-data storytelling web app. This MVP includes:
 ## Tech stack
 - Next.js (App Router) + TypeScript
 - React
+- Clerk Authentication
 - Convex (schema scaffold + client provider)
 
 ## Run locally
@@ -19,17 +21,30 @@ StatStage is a sports-data storytelling web app. This MVP includes:
    ```bash
    npm install
    ```
-2. Start development server:
+2. Create `.env.local` from `.env.example` and add:
+   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+   - `CLERK_SECRET_KEY`
+   - Optional: `NEXT_PUBLIC_CONVEX_URL`
+3. Start development server:
    ```bash
    npm run dev
    ```
-3. Open [http://localhost:3000](http://localhost:3000)
+4. Open [http://localhost:3000](http://localhost:3000)
+
+## Deploy to Vercel
+1. Import this repo into Vercel.
+2. Set environment variables in Vercel project settings:
+   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+   - `CLERK_SECRET_KEY`
+   - Optional: `NEXT_PUBLIC_CONVEX_URL`
+3. Deploy (preview by default).
 
 ## Convex notes
 - Add `NEXT_PUBLIC_CONVEX_URL` to `.env.local` when backend is ready.
 - See `convex/README.md` for setup notes.
 
 ## Current behavior
+- Auth is available, but create/upload flows remain public.
 - Sample button opens `/immersive-6000-run-club/index.html` (exact main-branch immersive experience).
 - Upload button stores parsed CSV + inferred projection in session storage and opens `/immersive-upload/index.html?session=...`.
 - Upload immersive scene reuses the same immersive interaction model (tour, search, isolate, focus, volume toggles).

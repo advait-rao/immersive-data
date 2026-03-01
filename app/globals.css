@@ -83,6 +83,48 @@ a {
   padding: 1.5rem;
 }
 
+.auth-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.auth-btn {
+  min-height: 40px;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.84rem;
+}
+
+.auth-signed-in {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid rgba(163, 179, 211, 0.22);
+  border-radius: 999px;
+  padding: 0.32rem 0.36rem 0.32rem 0.72rem;
+  background: rgba(17, 24, 36, 0.78);
+}
+
+.auth-status-label {
+  max-width: min(46vw, 340px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #d7e3f9;
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.auth-page-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+}
+
 .brand-kicker {
   margin: 0;
   font-size: 0.86rem;
@@ -830,6 +872,15 @@ td {
 
   .brand-display {
     font-size: clamp(2.35rem, 13vw, 3.6rem);
+  }
+
+  .auth-actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .auth-status-label {
+    max-width: 62vw;
   }
 
   .sports-ticker {

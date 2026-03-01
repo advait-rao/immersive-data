@@ -1,22 +1,26 @@
 import type { CsvRow } from "./csv";
 
 export function normalizeCricketSampleRows(rows: CsvRow[]): CsvRow[] {
-  return rows
-    .map((row) => {
-      const spanYears = parseSpanYears(row.Span ?? "");
-      if (!spanYears) return null;
+  const normalizedRows: CsvRow[] = [];
 
-      const runs = parseInteger(row.Runs);
-      if (runs === null) return null;
+  rows.forEach((row) => {
+    const spanYears = parseSpanYears(row.Span ?? "");
+    if (!spanYears) return;
 
-      return {
-        ...row,
-        DebutYear: String(spanYears.debutYear),
-        LastYear: String(spanYears.lastYear),
-        RunsClean: String(runs),
-      };
-    })
-    .filter((row): row is CsvRow => row !== null);
+    const runs = parseInteger(row.Runs);
+    if (runs === null) return;
+
+    const normalizedRow: CsvRow = {
+      ...row,
+      DebutYear: String(spanYears.debutYear),
+      LastYear: String(spanYears.lastYear),
+      RunsClean: String(runs),
+    };
+
+    normalizedRows.push(normalizedRow);
+  });
+
+  return normalizedRows;
 }
 
 function parseSpanYears(spanText: string): { debutYear: number; lastYear: number } | null {
