@@ -1,6 +1,6 @@
 "use client";
 
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 import { inferColumns } from "@/lib/charting";
@@ -44,7 +44,10 @@ const flowSteps = [
 ];
 
 export function LandingScreen() {
-  const authEnabled = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+  const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ?? "";
+  const authEnabled = Boolean(clerkPublishableKey);
+  const isClerkDevelopmentInstance = clerkPublishableKey.startsWith("pk_test_");
+  const authButtonMode = isClerkDevelopmentInstance ? "redirect" : "modal";
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -140,21 +143,27 @@ export function LandingScreen() {
             {authEnabled ? (
               <>
                 <SignedOut>
-                  <SignInButton mode="modal" fallbackRedirectUrl="/">
+                  <SignInButton mode={authButtonMode} fallbackRedirectUrl="/">
                     <button type="button" className="secondary-btn auth-btn">
                       Sign In
                     </button>
                   </SignInButton>
-                  <SignUpButton mode="modal" fallbackRedirectUrl="/">
+                  <SignUpButton mode={authButtonMode} fallbackRedirectUrl="/">
                     <button type="button" className="primary-btn auth-btn">
                       Sign Up
                     </button>
                   </SignUpButton>
+                  {isClerkDevelopmentInstance ? <span className="auth-mode-label">Clerk test keys active</span> : null}
                 </SignedOut>
 
                 <SignedIn>
                   <div className="auth-signed-in">
                     <span className="auth-status-label">Logged In</span>
+                    <SignOutButton redirectUrl="/">
+                      <button type="button" className="secondary-btn auth-btn auth-logout-btn">
+                        Log Out
+                      </button>
+                    </SignOutButton>
                     <UserButton afterSignOutUrl="/" />
                   </div>
                 </SignedIn>
